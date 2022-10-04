@@ -41,7 +41,96 @@ func main() {
 			player1Turn = true
 		}
 		game.drawBoard()
+		if game.checkIfWinner() {
+			fmt.Println("Game ended")
+			game.drawBoard()
+			break
+		}
 	}
+}
+
+func (game *Game) checkIfWinner() bool {
+
+	// check horizontal
+	for _, row := range game.Board {
+		check := make(map[string]int)
+		for _, cell := range row {
+			if cell == game.DefaultBlank {
+				break
+			} else {
+				if check[cell] == 0 {
+					check[cell] = 1
+				} else {
+					check[cell] += 1
+				}
+
+				if check[cell] == 3 {
+					return true
+				}
+			}
+		}
+	}
+
+	// check vertical
+	for col := 0; col < 3; col++ {
+		check := make(map[string]int)
+
+		for row := 0; row < 3; row++ {
+			if game.Board[row][col] == game.DefaultBlank {
+				break
+			} else {
+				if check[game.Board[row][col]] == 0 {
+					check[game.Board[row][col]] = 1
+				} else {
+					check[game.Board[row][col]] += 1
+				}
+
+				if check[game.Board[row][col]] == 3 {
+					return true
+				}
+			}
+		}
+	}
+
+	// check diagonal
+	check := make(map[string]int)
+	for i := 0; i < 3; i++ {
+		if game.Board[i][i] == game.DefaultBlank {
+			break
+		} else {
+			if check[game.Board[i][i]] == 0 {
+				check[game.Board[i][i]] = 1
+			} else {
+				check[game.Board[i][i]] += 1
+			}
+
+			if check[game.Board[i][i]] == 3 {
+				return true
+			}
+		}
+	}
+
+	check = make(map[string]int)
+	decremental := 2
+	for i := 0; i < 3; i++ {
+		if game.Board[i][decremental] == game.DefaultBlank {
+			break
+		} else {
+			if check[game.Board[i][decremental]] == 0 {
+				check[game.Board[i][decremental]] = 1
+			} else {
+				check[game.Board[i][decremental]] += 1
+			}
+
+			if check[game.Board[i][decremental]] == 3 {
+				return true
+			}
+		}
+
+		decremental -= 1
+	}
+
+	return false
 }
 
 func (game *Game) askForLocation(player *Player) []int {
