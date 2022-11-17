@@ -71,7 +71,7 @@ func (game *Game) checkIfWinner() bool {
 		}
 	}
 
-	// check vertical
+	//  check vertical
 	for col := 0; col < 3; col++ {
 		check := make(map[string]int)
 
