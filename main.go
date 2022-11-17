@@ -92,7 +92,7 @@ func (game *Game) checkIfWinner() bool {
 		}
 	}
 
-	// check diagonal
+	//  check diagonal
 	check := make(map[string]int)
 	for i := 0; i < 3; i++ {
 		if game.Board[i][i] == game.DefaultBlank {
